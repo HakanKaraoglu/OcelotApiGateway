@@ -1,29 +1,36 @@
 {
     "ReRoutes": [
         {
-            "DownstreamPathTemplate": "/api/{catchAll}",
+            "DownstreamPathTemplate": "/api/{everything}",
             "DownstreamScheme": "http",
+            "ServiceName": "catalog",
+            "UpstreamPathTemplate": "/catalog-api/{everything}",
             "DownstreamHostAndPorts": [
                     {
                         "Host": "localhost",
                         "Port": 7001
                     }
-                ],
-            "UpstreamPathTemplate": "/catalog-api/{catchAll}"
+                ]            
         },
         {
-            "DownstreamPathTemplate": "/api/{catchAll}",
+            "DownstreamPathTemplate": "/api/{everything}",
             "DownstreamScheme": "http",
+            "ServiceName": "order",
+            "UpstreamPathTemplate": "/orders-api/{everything}",
             "DownstreamHostAndPorts": [
                     {
                         "Host": "localhost",
                         "Port": 7002
                     }
-                ],
-            "UpstreamPathTemplate": "/orders-api/{catchAll}"
+                ]            
         }
     ],
-    "GlobalConfiguration": {
-        "BaseUrl": "https://localhost:7000"
+  "GlobalConfiguration": {
+    "ServiceDiscoveryProvider": {
+        "Host": "localhost",
+        "Port": 32769,
+        "Type": "Consul",
+        "PollingInterval": 1000
     }
+  }
 }
